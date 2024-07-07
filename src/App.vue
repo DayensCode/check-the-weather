@@ -3,20 +3,28 @@
 <template>
   <header>
     <img alt="App logo" class="logo" src="@/assets/icons/logo.svg" width="90" height="48" />
-    <MainInfo />
+    <MainInfo :data="weatherData" v-if="weatherData.value" />
   </header>
 
   <main>
-    <!-- вопрос что за инпут как им пользоваться -->
-    <!-- <el-input type="text" name="location" class="location" placeholder="Search Location..." /> -->
-    <input v-model="location" type="text" name="location" class="location" placeholder="Search Location..." >
+    <!-- сделано чтобы страница не перерендеривалась -->
+    <form class="location-form" @submit.prevent="handleSubmit()">
+      <!-- вопрос что за инпут как им пользоваться -->
+      <!-- <el-input type="text" name="location" class="location" placeholder="Search Location..." /> -->
+      <input v-model="location.value" type="text" name="location" class="location" autocomplete="off" placeholder="Search Location..." @input="handleLocationInput">
+      <!-- вопрос сначала сделала через псевдоэлемент можно ли было привязать онклик к after -->
+      <button type="submit" class="location-button">
+        <img alt="" src="@/assets/icons/IconSearch.svg" />
+      </button>
+    </form>
     <WeatherDetails />
     <TodayDetails />
   </main>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, reactive, onMounted } from 'vue'
+import { getWeather } from '@/services/weatherService'
 import MainInfo from '@/components/mainInfo.vue'
 import WeatherDetails from '@/components/weatherDetails.vue'
 import TodayDetails from '@/components/todayDetails.vue'
@@ -29,9 +37,39 @@ export default defineComponent({
     TodayDetails,
   },
   setup() {
-    const location = ref()
+    // вопрос когда реф когда реактив
+    const location = reactive({
+      value: ''
+    })
+    const weatherData = reactive({})
+
+    onMounted(async () => {
+      weatherData.value = await getWeather('Saint-Petersburg')
+    })
+
+    // вопрос точно ли это надо
+    const handleLocationInput = (event) => {
+      location.value = event.target.value
+    }
+
+    const handleSubmit = async () => {
+      if (location.value !== '' && location.value.length > 2) {
+        try {
+          const data = await getWeather(location.value)
+          weatherData.value = data
+        } catch (error) {
+          console.error('Error fetching weather data:', error)
+        } finally {
+          location.value = ''
+        }
+      }
+    }
+
     return {
       location,
+      weatherData,
+      handleLocationInput,
+      handleSubmit,
     }
   },
 })
@@ -70,23 +108,33 @@ main {
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.14);
 }
 
+.location-form {
+  display: flex;
+  padding-top: 14px;
+}
+
 .location {
   width: 100%;
-  padding: 14px 0 13px;
+  padding-bottom: 13px;
   background-color: transparent;
   border: none;
   border-bottom: 1px solid #FFFFFF;
   margin-bottom: 41px;
-
-  background: url('@/assets/icons/IconSearch.svg') no-repeat right center;
+  font-size: 20px;
+  color: #FFFFFF;
 }
 
-.location::after {
-  content: '';
+.location:focus {
+  outline: none;
 }
 
 .location::placeholder {
-  font-size: 20px;
   color: rgba(255, 255, 255, 0.7);
+}
+
+.location-button {
+  align-self: flex-start;
+  background-color: transparent;
+  border: none;
 }
 </style>
