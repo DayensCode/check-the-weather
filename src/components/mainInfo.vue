@@ -21,7 +21,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    // Вопрос на счет копьютед когда компьютед когда обычная функция
+    // вопрос на счет копьютед когда компьютед когда обычная функция
     const formattedDate = computed(() => {
       const dateString = props.data.value.location.localtime
       const date = new Date(dateString)
