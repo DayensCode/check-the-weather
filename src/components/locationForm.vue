@@ -2,9 +2,9 @@
   <form class="location-form" @submit.prevent="handleSubmit()">
     <!-- вопрос что за инпут как им пользоваться (библиотека?)-->
     <!-- <el-input type="text" name="location" class="location" placeholder="Search Location..." /> -->
-    <input v-model="location.value" type="text" name="location" class="location" autocomplete="off" placeholder="Search Location..." @input="handleLocationInput">
+    <input v-model="location.value" type="text" name="location" autocomplete="off" placeholder="Search Location..." @input="handleLocationInput">
     <!-- вопрос сначала сделала через псевдоэлемент можно ли было привязать онклик к after -->
-    <button type="submit" class="location-button">
+    <button type="submit">
       <img alt="" src="@/assets/icons/IconSearch.svg" />
     </button>
   </form>
@@ -57,34 +57,40 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .location-form {
   display: flex;
   padding-top: 14px;
-}
 
-.location {
-  width: 100%;
-  padding-bottom: 13px;
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid #FFFFFF;
-  margin-bottom: 41px;
-  font-size: 20px;
-  color: #FFFFFF;
-}
+  input  {
+    width: 100%;
+    padding-bottom: 13px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #FFFFFF;
+    margin-bottom: 41px;
+    font-size: 20px;
+    color: #FFFFFF;
 
-.location:focus {
-  outline: none;
-}
+    &:focus {
+      outline: none;
+    }
 
-.location::placeholder {
-  color: rgba(255, 255, 255, 0.7);
-}
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
 
-.location-button {
-  align-self: flex-start;
-  background-color: transparent;
-  border: none;
+  button {
+    align-self: flex-start;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s linear;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
 }
 </style>

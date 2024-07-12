@@ -1,7 +1,7 @@
 <!-- вопрос на счет отладчика вью какой лучше поставить где найти -->
 <template>
   <header>
-    <img alt="App logo" class="logo" src="@/assets/icons/logo.svg" width="90" height="48" />
+    <img alt="App logo" src="@/assets/icons/logo.svg" width="90" height="48" />
     <MainInfo :data="weatherData" v-if="weatherData.value" />
   </header>
 
@@ -41,22 +41,15 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 header {
   padding: 37px 117px 85px;
   height: 100vh;
-  background-image: url('@/assets/images/bg-weather.png');
-  background-repeat: no-repeat;
-  background-size: cover;
   color: #FFFFFF;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-.logo {
-  display: block;
 }
 
 main {

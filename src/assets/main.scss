@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+body,
+html {
+  font-size: 18px;
+  font-family: Roboto, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: url("@/assets/images/bg-weather.png");
+  background-size: cover;
+}
+
+#app {
+  height: 100vh;
+}
+
+img {
+  display: block;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+/* reused */
+.title {
+  padding-bottom: 52px;
+  font-size: 18px;
+}
+
+.mute {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.list {
+  padding:  0;
+  list-style: none;
+  font-size: 18px;
+}

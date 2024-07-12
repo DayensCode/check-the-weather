@@ -1,11 +1,11 @@
 <template>
-  <h3 class="reused-title">Weather Details...</h3>
+  <h3 class="title">Weather Details...</h3>
   <div class="details">
-    <h3 class="title">{{ data.value.current.condition.text }}</h3>
+    <h3>{{ data.value.current.condition.text }}</h3>
     <ul class="list">
-      <li class="list-item mute" v-for="(item) in weatherData">
+      <li class="mute" v-for="(item) in weatherData">
         {{  item.name  }}
-        <span class="list-item-value">{{ item.value }}</span>
+        <span>{{ item.value }}</span>
       </li>
     </ul>
   </div>
@@ -40,35 +40,30 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .details {
   padding-bottom: 86px;
   margin-bottom: 40px;
-  border-bottom: 1px solid #FFFFFF; 
-}
+  border-bottom: 1px solid #FFFFFF;
 
-.title {
-  text-transform: uppercase;
-  font-size: 18px;
-  padding-bottom: 30px;
-}
+  h3 {
+    text-transform: uppercase;
+    font-size: 18px;
+    padding-bottom: 30px;
+  }
 
-.list-item {
-  padding-bottom: 30px;
-  display: flex;
-  justify-content: space-between;
-}
+  li {
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
 
-.list-item:last-of-type {
-  padding-bottom: 0;
-}
+    &:last-of-type {
+      padding-bottom: 0;
+    }
 
-.list-item-value {
-  color: #FFFFFF;
-}
-
-.icon-cloudy-styled {
-  width: 26px;
-  height: 26px;
+    span {
+      color: #FFFFFF;
+    }
+  }
 }
 </style>

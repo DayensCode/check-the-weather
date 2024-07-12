@@ -1,11 +1,12 @@
 <template>
   <div class="today">
-    <h3 class="reused-title">Today’s Weather Forecast...</h3>
+    <h3 class="title">Today’s Weather Forecast...</h3>
     <ul class="list">
-      <li class="today-list-item" v-for="item in hoursValues.values">
-        <div class="today-icon-wrapper">
-          <img alt="" :src="item.src" />
-          <div class="info-wrapper">
+      <li v-for="item in hoursValues">
+        <div class="info-wrapper">
+          <!-- тестила работу с икноками как с компонентами -->
+          <PngIcon :name="item.src" />
+          <div class="info">
             <span>{{ item.time }}</span>
             <span class="mute">{{  item.condition }}</span>
           </div>
@@ -17,7 +18,8 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, computed } from 'vue'
+import PngIcon from '@/components/pngIcon.vue'
 
 export default defineComponent({
   name: 'TodayDetails',
@@ -27,15 +29,20 @@ export default defineComponent({
       required: true,
     }
   },
+  components: {
+    PngIcon,
+  },
   setup(props) {
-    // значения не обновляются пробовала через watch
-    const hoursValues = reactive({})
-    hoursValues.values = props.data.value.forecast.forecastday[0].hour.map((item) => ({
-        time: item.time.split(" ")[1],
-        temp: item.temp_c,
-        condition: item.condition.text,
-        src: item.condition.icon,
-    }))
+    const hoursValues = computed(() => {
+      const formattedValues = props.data.value.forecast.forecastday[0].hour.map((item) => ({
+          time: item.time.split(" ")[1],
+          temp: item.temp_c,
+          condition: item.condition.text,
+          src: item.condition.icon.split('/').slice(-2),
+      }))
+
+      return formattedValues
+    })
 
     return {
       hoursValues,
@@ -44,31 +51,31 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .today {
   font-size: 18px;
-}
 
-.today-list-item {
-  padding-bottom: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  li {
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-.today-list-item:last-of-type {
-  padding-bottom: 0;
-}
-
-.today-icon-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 35px;
+    &:last-of-type {
+      padding-bottom: 0;
+    }
+  }
 }
 
 .info-wrapper {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+
+  .info {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .today-degrees {

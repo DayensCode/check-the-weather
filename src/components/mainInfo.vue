@@ -2,8 +2,8 @@
   <div class="info">
     <span class="degrees">{{ roundedDegrees }}°</span>
     <div class="place">
-      <h1 class="city" >{{ data.value.location.name }}</h1>
-      <h2 class="date">{{ formattedDate }}</h2>
+      <h1>{{ data.value.location.name }}</h1>
+      <h2>{{ formattedDate }}</h2>
     </div>
     <img alt="" class="cloudy" src="@/assets/icons/IconCloudy.svg" />
   </div>
@@ -50,7 +50,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .info {
   display: flex;
   gap: 10px;
@@ -62,10 +62,6 @@ export default defineComponent({
 
 .place {
   align-self: center;
-}
-
-.city {
-  font-size: 60px;
 }
 
 .cloudy {
