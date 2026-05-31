@@ -3,7 +3,7 @@
 
 Пользователь может просматривать текущую погоду в выбранном городе, подробные погодные показатели и почасовой прогноз на текущий день.
 
-![Check the Weather](src/assets/images/chrome_Zvh8TIN2V0.jpg)
+![Check the Weather](src/assets/images/readme_image.jpg)
 
 ## Возможности
 
